@@ -1,0 +1,113 @@
+Option Explicit
+
+Const UNITCOST = 2          'Cost per card
+Const JACKPOT = 10000       'The amount of winnings from a single win
+ 
+Dim numCards As Long
+Dim winner As String
+Dim cards() As String
+Dim win As Boolean
+Dim balance As Double
+
+Sub main()
+
+    initialize
+    generateCard winner         'Generate a random winner of 5 digits
+    createCardsArray           'Create an array of cards (5 digits)
+    checkCards win            'Check to see if winner
+    calculateBalance         'Calculate the balance of money you have left
+    printResults                'Print whether winner or not
+    
+End Sub
+
+Sub initialize()
+
+    numCards = Sheet1.Range("C5").Value
+
+    ReDim cards(1 To numCards)
+    
+End Sub
+
+Sub generateCard(ByRef item As String)      'Create a string of 5 random digits
+
+    Dim i As Integer
+    Dim digit As Integer
+    
+    item = ""
+    
+    For i = 1 To 5 'The lottery number consists of only 5 digits
+        digit = WorksheetFunction.RandBetween(0, 9)
+        item = item & digit
+    Next i
+    
+End Sub
+
+Sub createCardsArray()       'Create an array of cards, each with 5 random digits
+
+    Dim i As Long
+    Dim card As String
+
+    For i = 1 To numCards
+        generateCard card
+        cards(i) = card
+    Next i
+    
+End Sub
+
+Sub printCardsArray()
+    
+    Dim i As Integer
+    
+    Debug.Print
+    
+    For i = 1 To numCards
+        Debug.Print cards(i)
+    Next i
+    
+End Sub
+
+Sub checkCards(ByRef wn As Boolean)             'Check whether winner is in the cards array
+
+    Dim i As Long
+    
+    i = 1
+    
+    wn = False
+    
+    While i <= numCards And Not wn
+        If cards(i) = winner Then
+            wn = True
+        Else
+            i = i + 1
+        End If
+    Wend
+    
+End Sub
+
+Sub calculateBalance()
+    
+    balance = (-UNITCOST) * numCards
+    If win Then
+        balance = balance + JACKPOT
+    End If
+    
+End Sub
+
+Sub printResults()                  'Display results on sheet 1
+
+    With Sheet1
+    
+        .Range("C5").Value = numCards
+        .Range("C7").Value = winner
+        
+        If win Then
+            .Range("C9").Value = "Winner"
+        Else
+            .Range("C9").Value = "No Winner"
+        End If
+        .Range("C11").Value = balance
+    End With
+
+End Sub
+
+
