@@ -1,1 +1,1 @@
-# Hackathons and Miscellaneous
+# Hackathons / Miscellaneous
