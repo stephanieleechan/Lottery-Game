@@ -1,1 +1,3 @@
-# Hackathons / Miscellaneous
+# Lottery Game, Hackathons, and Miscellaneous
+
+(Constantly updating)
